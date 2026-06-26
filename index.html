@@ -1,0 +1,891 @@
+<!DOCTYPE html>
+<html lang="zh-CN" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>高丽丽 | AI导演 & 视觉内容制作人</title>
+    <!-- 引入 Tailwind CSS 进行快速样式开发 -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- 配置 Tailwind 主题色 -->
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        dark: '#05080f',
+                        darker: '#020408',
+                        neon: '#00f2fe',
+                        neonDark: '#4facfe',
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'PingFang SC', 'Microsoft YaHei', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        /* 自定义滚动条 */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #05080f; 
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #1f2937; 
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #00f2fe; 
+        }
+        /* 文本选中颜色 */
+        ::selection {
+            background: rgba(0, 242, 254, 0.3);
+            color: #fff;
+        }
+        /* 渐现动画基础类 */
+        .reveal {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.8s cubic-bezier(0.5, 0, 0, 1);
+        }
+        .reveal.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        /* 霓虹发光文本特效 */
+        .text-glow {
+            text-shadow: 0 0 20px rgba(0, 242, 254, 0.4);
+        }
+        /* 背景光晕 */
+        .bg-glow {
+            position: absolute;
+            width: 600px;
+            height: 600px;
+            background: radial-gradient(circle, rgba(0,242,254,0.05) 0%, rgba(5,8,15,0) 70%);
+            border-radius: 50%;
+            pointer-events: none;
+            z-index: -1;
+        }
+    </style>
+</head>
+<body class="antialiased font-sans selection:bg-neon selection:text-dark bg-dark text-gray-300 overflow-x-hidden">
+
+    <!-- 背景光晕装饰 -->
+    <div class="bg-glow top-0 left-0"></div>
+    <div class="bg-glow top-[40%] right-[-200px]"></div>
+    <div class="bg-glow bottom-0 left-[20%]"></div>
+
+    <!-- 导航栏 -->
+    <nav class="fixed w-full z-50 top-0 transition-all duration-300 backdrop-blur-md bg-dark/70 border-b border-white/5" id="navbar">
+        <div class="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center">
+            <a href="#" class="text-xl font-black tracking-widest text-white">GAO LILI.</a>
+            <div class="hidden md:flex space-x-8 text-sm font-medium text-gray-400">
+                <a href="#about" class="hover:text-neon transition-colors">关于</a>
+                <a href="#skills" class="hover:text-neon transition-colors">技能</a>
+                <a href="#portfolio" class="hover:text-neon transition-colors">作品</a>
+                <a href="#workflow" class="hover:text-neon transition-colors">工作流</a>
+                <a href="#contact" class="hover:text-neon transition-colors">联系</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- 第一板块：首屏 Hero Section -->
+    <section class="relative min-h-screen flex flex-col justify-center items-center px-4 pt-20">
+        <div class="text-center reveal max-w-4xl mx-auto z-10">
+            <p class="text-neon tracking-[0.3em] text-xs md:text-sm uppercase mb-6 font-semibold">Hello, I'm</p>
+            <h1 class="text-6xl md:text-8xl lg:text-9xl font-black mb-6 tracking-tighter text-white">高丽丽</h1>
+            
+            <div class="flex flex-col md:flex-row items-center justify-center gap-2 md:gap-4 mb-8 text-lg md:text-xl text-gray-300 font-light">
+                <span>AI导演</span>
+                <span class="hidden md:inline text-gray-600">/</span>
+                <span>AI漫剧创作师</span>
+                <span class="hidden md:inline text-gray-600">/</span>
+                <span>商业视觉内容制作人</span>
+            </div>
+
+            <p class="text-xl md:text-2xl text-transparent bg-clip-text bg-gradient-to-r from-neon to-neonDark font-medium mb-16 italic text-glow tracking-wide">
+                "用AI技术，重构视觉叙事的边界"
+            </p>
+
+            <div class="flex flex-col sm:flex-row gap-4 justify-center items-center">
+                <a href="#portfolio" class="w-full sm:w-auto px-8 py-3 rounded-full border border-neon text-neon hover:bg-neon hover:text-dark transition-all duration-300 text-sm tracking-widest font-medium text-center">查看作品</a>
+                <a href="#contact" class="w-full sm:w-auto px-8 py-3 rounded-full border border-gray-600 text-gray-300 hover:border-white hover:text-white transition-all duration-300 text-sm tracking-widest font-medium text-center">与我联系</a>
+                <a href="#" class="w-full sm:w-auto px-8 py-3 rounded-full border border-gray-600 text-gray-300 hover:border-white hover:text-white transition-all duration-300 text-sm tracking-widest font-medium text-center flex items-center justify-center gap-2">
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"></path></svg>
+                    下载作品集
+                </a>
+            </div>
+        </div>
+        <!-- 滚动提示语 -->
+        <div class="absolute bottom-10 left-1/2 -translate-x-1/2 flex flex-col items-center animate-bounce text-gray-500 text-xs tracking-widest">
+            <span>SCROLL</span>
+            <svg class="w-4 h-4 mt-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 14l-7 7m0 0l-7-7m7 7V3"></path></svg>
+        </div>
+    </section>
+
+    <!-- 第二板块：个人简介 -->
+    <section id="about" class="py-24 md:py-32 px-6 border-t border-white/5 bg-darker relative">
+        <div class="max-w-7xl mx-auto reveal">
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-20">
+                <!-- 左侧大标题 -->
+                <div class="lg:col-span-5 flex flex-col justify-start">
+                    <h2 class="text-xs text-neon tracking-[0.3em] uppercase mb-4">About Me</h2>
+                    <h3 class="text-4xl md:text-5xl font-bold leading-tight mb-6">把故事，<br><span class="text-gray-500">变成镜头。</span></h3>
+                    <div class="h-px w-20 bg-neon mb-8"></div>
+                    <p class="text-sm text-gray-400 tracking-wider leading-relaxed border-l border-gray-800 pl-4">
+                        本科学历 | 6年工作经验<br>
+                        前资深 UI 设计师，负责过多端产品界面及百万人级用户体验升级。<br>
+                        <span class="text-white mt-2 block">这让我更深刻理解了“用户视角”。</span>
+                    </p>
+                </div>
+                
+                <!-- 右侧详细介绍排版 -->
+                <div class="lg:col-span-7 flex flex-col justify-center">
+                    <h4 class="text-2xl md:text-3xl font-semibold mb-8 tracking-wide">
+                        <span class="text-transparent bg-clip-text bg-gradient-to-r from-white to-gray-500">核心优势转化：</span><br>
+                        从UI设计到视觉制作人
+                    </h4>
+                    
+                    <div class="space-y-8 text-gray-400 leading-relaxed text-sm md:text-base font-light">
+                        <p class="relative pl-6 before:content-[''] before:absolute before:left-0 before:top-2 before:w-1.5 before:h-1.5 before:bg-neon before:rounded-full">
+                            多年的设计经验赋予了我极其敏锐的<strong class="text-white font-medium">视觉审美能力</strong>。在AI时代，我将这种对“像素级”细节的把控力，转化为对<strong class="text-white font-medium">镜头语言与叙事节奏的精准掌控</strong>。
+                        </p>
+                        <p class="relative pl-6 before:content-[''] before:absolute before:left-0 before:top-2 before:w-1.5 before:h-1.5 before:neon before:bg-neon before:rounded-full">
+                            我不仅懂如何生成精美的画面，<strong class="text-white font-medium text-lg text-glow">更懂得如何用画面讲故事。</strong>
+                        </p>
+                        <p class="relative pl-6 before:content-[''] before:absolute before:left-0 before:top-2 before:w-1.5 before:h-1.5 before:bg-neon before:rounded-full">
+                            利用AI打破传统物理拍摄的限制，让天马行空的商业创意与剧本概念高质量、高效率地落地。
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 第三板块：技能掌握 -->
+    <section id="skills" class="py-24 md:py-32 px-6">
+        <div class="max-w-7xl mx-auto reveal">
+            <div class="mb-16 md:mb-24 text-center md:text-left">
+                <h2 class="text-xs text-neon tracking-[0.3em] uppercase mb-4">Capabilities</h2>
+                <h3 class="text-4xl md:text-5xl font-bold">技能掌握 <span class="text-gray-600 text-2xl md:text-3xl ml-2 font-light">(AI方向)</span></h3>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                <!-- Skill Cards -->
+                <div class="p-8 border border-white/5 bg-white/[0.02] hover:bg-white/[0.05] transition-all duration-300 group rounded-2xl flex flex-col">
+                    <div class="text-neon mb-4 font-mono text-sm opacity-50 group-hover:opacity-100 transition-opacity">01</div>
+                    <h4 class="text-lg font-bold text-white mb-3">剧本拆解与叙事架构</h4>
+                    <p class="text-sm text-gray-400 leading-relaxed font-light">能够分析剧本类型、角色关系、情绪曲线及剧情节奏，完成AI短剧内容结构设计。</p>
+                </div>
+                <div class="p-8 border border-white/5 bg-white/[0.02] hover:bg-white/[0.05] transition-all duration-300 group rounded-2xl flex flex-col">
+                    <div class="text-neon mb-4 font-mono text-sm opacity-50 group-hover:opacity-100 transition-opacity">02</div>
+                    <h4 class="text-lg font-bold text-white mb-3">分镜设计与视觉预演</h4>
+                    <p class="text-sm text-gray-400 leading-relaxed font-light">能够将剧本拆解为镜头语言，完成景别、机位、运镜及画面节奏设计。</p>
+                </div>
+                <div class="p-8 border border-white/5 bg-white/[0.02] hover:bg-white/[0.05] transition-all duration-300 group rounded-2xl flex flex-col">
+                    <div class="text-neon mb-4 font-mono text-sm opacity-50 group-hover:opacity-100 transition-opacity">03</div>
+                    <h4 class="text-lg font-bold text-white mb-3">AI人物设计与一致性控制</h4>
+                    <p class="text-sm text-gray-400 leading-relaxed font-light">能够完成角色设定、三视图制作、服装设计、表情库搭建及多镜头人物一致性管理。</p>
+                </div>
+                <div class="p-8 border border-white/5 bg-white/[0.02] hover:bg-white/[0.05] transition-all duration-300 group rounded-2xl flex flex-col">
+                    <div class="text-neon mb-4 font-mono text-sm opacity-50 group-hover:opacity-100 transition-opacity">04</div>
+                    <h4 class="text-lg font-bold text-white mb-3">AI场景设计与氛围营造</h4>
+                    <p class="text-sm text-gray-400 leading-relaxed font-light">能够完成场景搭建、光影设计、色彩体系规划及影视级氛围塑造。</p>
+                </div>
+                <div class="p-8 border border-white/5 bg-white/[0.02] hover:bg-white/[0.05] transition-all duration-300 group rounded-2xl flex flex-col">
+                    <div class="text-neon mb-4 font-mono text-sm opacity-50 group-hover:opacity-100 transition-opacity">05</div>
+                    <h4 class="text-lg font-bold text-white mb-3">AI道具与产品资产设计</h4>
+                    <p class="text-sm text-gray-400 leading-relaxed font-light">能够完成剧情道具、品牌产品、商业展示物料及标准化资产库制作。</p>
+                </div>
+                <div class="p-8 border border-white/5 bg-white/[0.02] hover:bg-white/[0.05] transition-all duration-300 group rounded-2xl flex flex-col">
+                    <div class="text-neon mb-4 font-mono text-sm opacity-50 group-hover:opacity-100 transition-opacity">06</div>
+                    <h4 class="text-lg font-bold text-white mb-3">AI商业广告创意策划</h4>
+                    <p class="text-sm text-gray-400 leading-relaxed font-light">能够完成产品卖点提炼、广告脚本设计、营销创意包装及转化逻辑规划。</p>
+                </div>
+                <div class="p-8 border border-white/5 bg-white/[0.02] hover:bg-white/[0.05] transition-all duration-300 group rounded-2xl flex flex-col">
+                    <div class="text-neon mb-4 font-mono text-sm opacity-50 group-hover:opacity-100 transition-opacity">07</div>
+                    <h4 class="text-lg font-bold text-white mb-3">AI产品视觉与电商内容制作</h4>
+                    <p class="text-sm text-gray-400 leading-relaxed font-light">能够完成商品主图、详情页视觉、广告海报、产品故事板及带货视频素材设计。</p>
+                </div>
+                <div class="p-8 border border-white/5 bg-white/[0.02] hover:bg-white/[0.05] transition-all duration-300 group rounded-2xl flex flex-col">
+                    <div class="text-neon mb-4 font-mono text-sm opacity-50 group-hover:opacity-100 transition-opacity">08</div>
+                    <h4 class="text-lg font-bold text-white mb-3">AI视频生成与动态演绎</h4>
+                    <p class="text-sm text-gray-400 leading-relaxed font-light">能够完成AI真人短剧、商业广告、产品展示视频及角色动态表演生成。</p>
+                </div>
+                <div class="p-8 border border-white/5 bg-white/[0.02] hover:bg-white/[0.05] transition-all duration-300 group rounded-2xl flex flex-col">
+                    <div class="text-neon mb-4 font-mono text-sm opacity-50 group-hover:opacity-100 transition-opacity">09</div>
+                    <h4 class="text-lg font-bold text-white mb-3">视频剪辑与后期包装</h4>
+                    <p class="text-sm text-gray-400 leading-relaxed font-light">能够完成剪辑调色、配音配乐、字幕包装、特效制作及成片输出优化。</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 第四板块：作品展示 -->
+    <section id="portfolio" class="py-24 md:py-32 px-6 border-t border-white/5 bg-darker">
+        <div class="max-w-7xl mx-auto">
+            <div class="mb-20 text-center md:text-left reveal">
+                <h2 class="text-xs text-neon tracking-[0.3em] uppercase mb-4">Selected Works</h2>
+                <h3 class="text-4xl md:text-5xl font-bold">精选作品<span class="text-neon text-5xl">.</span></h3>
+            </div>
+
+            <div class="space-y-40"> <!-- 加大了间距以容纳下方的制作流程 -->
+                
+                <!-- 项目 1 (竖屏 9:16 左图右文) -->
+                <div class="reveal group">
+                    <div class="flex flex-col md:flex-row gap-12 lg:gap-16">
+                        <!-- 预留视频空位 9:16 -->
+                        <div class="w-full md:w-5/12 lg:w-4/12 shrink-0">
+                            <div class="relative w-full aspect-[9/16] bg-gray-900 rounded-xl overflow-hidden border border-white/10 flex items-center justify-center">
+                                <video class="w-full h-full object-cover" controls playsinline loop muted>
+                                    <source src="videos/video1.mp4" type="video/mp4">
+                                </video>
+                            </div>
+                        </div>
+                        <!-- 简介 (统一左对齐) -->
+                        <div class="w-full md:w-7/12 lg:w-8/12 flex flex-col justify-center">
+                            <div class="flex flex-wrap gap-2 mb-6">
+                                <span class="px-3 py-1 bg-neon/5 border border-neon/30 text-neon text-xs rounded">海外真人影视视频</span>
+                            </div>
+                            <h4 class="text-3xl md:text-4xl font-bold mb-8 text-white">Carry</h4>
+                            <div class="space-y-6">
+                                <div>
+                                    <h5 class="text-base text-neon font-bold mb-2 flex items-center"><span class="inline-block w-2.5 h-2.5 bg-neon mr-2"></span>项目难点：</h5>
+                                    <p class="text-gray-400 text-sm md:text-base leading-relaxed">项目题材涉及专业橄榄球运动，而本人前期缺乏相关背景知识，对赛制规则、场地标识、战术体系及球员训练细节了解有限。在AI视频生成过程中，经常出现球员跑位错误、动作不符合运动规律、多角色运动轨迹混乱以及攻防逻辑失真的问题。尤其在多人对抗镜头中，AI容易产生人物乱跑、位置穿插错误和战术执行混乱等现象，严重影响画面真实性与专业度。</p>
+                                </div>
+                                <div>
+                                    <h5 class="text-base text-neon font-bold mb-2 flex items-center"><span class="inline-block w-2.5 h-2.5 bg-neon mr-2"></span>破局方案：</h5>
+                                    <p class="text-gray-300 text-sm md:text-base leading-relaxed">首先系统学习橄榄球专业知识，大量观看NFL比赛录像、“超级碗”赛事直播、训练纪录片以及经典体育电影《面对巨人》等内容，深入理解球员职责分工、战术路线、场地规则及真实比赛节奏。<br>在制作阶段，针对复杂比赛场景建立精细化分镜体系，通过详细的战术草图和分镜图提前规划每位球员的起始站位、移动路径、攻防关系及镜头调度逻辑。同时持续优化提示词结构，将人物身份、动作目标、运动方向、速度变化和空间关系进行明确约束，并对关键镜头进行定向修正，从而有效控制多人运动场景的稳定性和真实性。</p>
+                                </div>
+                                <div>
+                                    <h5 class="text-base text-neon font-bold mb-2 flex items-center"><span class="inline-block w-2.5 h-2.5 bg-neon mr-2"></span>项目成果：</h5>
+                                    <p class="text-gray-400 text-sm md:text-base leading-relaxed">成功实现橄榄球比赛与训练场景的高质量还原，显著降低了人物乱跑、动作失真及战术逻辑错误等问题。最终生成的比赛画面在球员跑位、攻防节奏 and 动作真实性方面均达到较高完成度，能够较好地呈现专业橄榄球运动的竞技氛围与视觉冲击力。</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- 制作过程展示 -->
+                    <div class="mt-12 pt-8 border-t border-white/5">
+                        <div class="grid grid-cols-2 md:grid-cols-4 gap-4 relative">
+                            <!-- 步骤 1 -->
+                            <div class="flex flex-col gap-3 group/step">
+                                <div class="flex items-center gap-2">
+                                    <span class="w-1.5 h-1.5 rounded-full bg-gray-500 group-hover/step:bg-neon transition-colors"></span>
+                                    <span class="text-sm font-medium text-gray-400 group-hover/step:text-white transition-colors">角色设计</span>
+                                </div>
+                                <img src="images/p1_role.png" class="w-full aspect-video object-cover rounded border border-white/5 group-hover/step:border-neon/30 transition-colors" alt="角色设计">
+                            </div>
+                            <!-- 步骤 2 -->
+                            <div class="flex flex-col gap-3 group/step">
+                                <div class="flex items-center gap-2">
+                                    <span class="w-1.5 h-1.5 rounded-full bg-gray-500 group-hover/step:bg-neon transition-colors"></span>
+                                    <span class="text-sm font-medium text-gray-400 group-hover/step:text-white transition-colors">场景设计</span>
+                                </div>
+                                <img src="images/p1_scene.jpg" class="w-full aspect-video object-cover rounded border border-white/5 group-hover/step:border-neon/30 transition-colors" alt="场景设计">
+                            </div>
+                            <!-- 步骤 3 -->
+                            <div class="flex flex-col gap-3 group/step">
+                                <div class="flex items-center gap-2">
+                                    <span class="w-1.5 h-1.5 rounded-full bg-gray-500 group-hover/step:bg-neon transition-colors"></span>
+                                    <span class="text-sm font-medium text-gray-400 group-hover/step:text-white transition-colors">分镜设计</span>
+                                </div>
+                                <img src="images/p1_storyboard.png" class="w-full aspect-video object-cover rounded border border-white/5 group-hover/step:border-neon/30 transition-colors" alt="分镜设计">
+                            </div>
+                            <!-- 步骤 4 -->
+                            <div class="flex flex-col gap-3 group/step">
+                                <div class="flex items-center gap-2">
+                                    <span class="w-1.5 h-1.5 rounded-full bg-gray-500 group-hover/step:bg-neon transition-colors"></span>
+                                    <span class="text-sm font-medium text-gray-400 group-hover/step:text-white transition-colors">后期剪辑</span>
+                                </div>
+                                <img src="images/p1_edit.png" class="w-full aspect-video object-cover rounded border border-white/5 group-hover/step:border-neon/30 transition-colors" alt="后期剪辑">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 项目 2 (竖屏 9:16 右图左文，文案已强制左对齐) -->
+                <div class="reveal group">
+                    <div class="flex flex-col md:flex-row-reverse gap-12 lg:gap-16">
+                        <div class="w-full md:w-5/12 lg:w-4/12 shrink-0">
+                            <div class="relative w-full aspect-[9/16] bg-gray-900 rounded-xl overflow-hidden border border-white/10 flex items-center justify-center">
+                                <video class="w-full h-full object-cover" controls playsinline loop muted>
+                                    <source src="videos/video2.mp4" type="video/mp4">
+                                </video>
+                            </div>
+                        </div>
+                        <div class="w-full md:w-7/12 lg:w-8/12 flex flex-col justify-center">
+                            <div class="flex flex-wrap gap-2 mb-6">
+                                <span class="px-3 py-1 bg-neon/5 border border-neon/30 text-neon text-xs rounded">海外真人影视视频</span>
+                            </div>
+                            <h4 class="text-3xl md:text-4xl font-bold mb-8 text-white">The Nerd Who Stole the Quarterback</h4>
+                            <div class="space-y-6">
+                                <div>
+                                    <h5 class="text-base text-neon font-bold mb-2 flex items-center"><span class="inline-block w-2.5 h-2.5 bg-neon mr-2"></span>项目难点：</h5>
+                                    <p class="text-gray-400 text-sm md:text-base leading-relaxed">校园群像戏涉及大量角色同时出镜，且存在多个学生小团体之间的对话与正反打镜头。AI在生成过程中容易出现角色身份漂移、人物位置错乱、背景人物随机移动等问题，导致镜头连续性被破坏。</p>
+                                </div>
+                                <div>
+                                    <h5 class="text-base text-neon font-bold mb-2 flex items-center"><span class="inline-block w-2.5 h-2.5 bg-neon mr-2"></span>破局方案：</h5>
+                                    <p class="text-gray-300 text-sm md:text-base leading-relaxed">在前期分镜设计阶段，对所有角色进行编号管理并固定站位关系，为每个角色建立明确的位置锚点。通过分镜图预先规划人物视线方向、对话顺序及镜头切换逻辑，在提示词中增加人物位置约束与身份锁定描述。同时采用分镜拆分生成方式，将复杂多人场景拆解为多个可控镜头单元逐步生成，再进行后期剪辑拼接。</p>
+                                </div>
+                                <div>
+                                    <h5 class="text-base text-neon font-bold mb-2 flex items-center"><span class="inline-block w-2.5 h-2.5 bg-neon mr-2"></span>项目成果：</h5>
+                                    <p class="text-gray-400 text-sm md:text-base leading-relaxed">成功实现多人校园群像场景的稳定输出，有效避免角色乱跑和身份错位问题，保证了人物关系与镜头叙事的连续性。</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- 制作过程展示 -->
+                    <div class="mt-12 pt-8 border-t border-white/5">
+                        <div class="grid grid-cols-2 md:grid-cols-4 gap-4 relative">
+                            <div class="flex flex-col gap-3 group/step">
+                                <div class="flex items-center gap-2">
+                                    <span class="w-1.5 h-1.5 rounded-full bg-gray-500 group-hover/step:bg-neon transition-colors"></span>
+                                    <span class="text-sm font-medium text-gray-400 group-hover/step:text-white transition-colors">角色设计</span>
+                                </div>
+                                <img src="images/p2_role.jpg" class="w-full aspect-video object-cover rounded border border-white/5 group-hover/step:border-neon/30 transition-colors" alt="角色设计">
+                            </div>
+                            <div class="flex flex-col gap-3 group/step">
+                                <div class="flex items-center gap-2">
+                                    <span class="w-1.5 h-1.5 rounded-full bg-gray-500 group-hover/step:bg-neon transition-colors"></span>
+                                    <span class="text-sm font-medium text-gray-400 group-hover/step:text-white transition-colors">场景设计</span>
+                                </div>
+                                <img src="images/p2_scene.png" class="w-full aspect-video object-cover rounded border border-white/5 group-hover/step:border-neon/30 transition-colors" alt="场景设计">
+                            </div>
+                            <div class="flex flex-col gap-3 group/step">
+                                <div class="flex items-center gap-2">
+                                    <span class="w-1.5 h-1.5 rounded-full bg-gray-500 group-hover/step:bg-neon transition-colors"></span>
+                                    <span class="text-sm font-medium text-gray-400 group-hover/step:text-white transition-colors">分镜设计</span>
+                                </div>
+                                <img src="images/p2_storyboard.png" class="w-full aspect-video object-cover rounded border border-white/5 group-hover/step:border-neon/30 transition-colors" alt="分镜设计">
+                            </div>
+                            <div class="flex flex-col gap-3 group/step">
+                                <div class="flex items-center gap-2">
+                                    <span class="w-1.5 h-1.5 rounded-full bg-gray-500 group-hover/step:bg-neon transition-colors"></span>
+                                    <span class="text-sm font-medium text-gray-400 group-hover/step:text-white transition-colors">后期剪辑</span>
+                                </div>
+                                <img src="images/p2_edit.png" class="w-full aspect-video object-cover rounded border border-white/5 group-hover/step:border-neon/30 transition-colors" alt="后期剪辑">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 项目 3 (竖屏 9:16 左图右文) -->
+                <div class="reveal group">
+                    <div class="flex flex-col md:flex-row gap-12 lg:gap-16">
+                        <div class="w-full md:w-5/12 lg:w-4/12 shrink-0">
+                            <div class="relative w-full aspect-[9/16] bg-gray-900 rounded-xl overflow-hidden border border-white/10 flex items-center justify-center">
+                                <video class="w-full h-full object-cover" controls playsinline loop muted>
+                                    <source src="videos/video3.mp4" type="video/mp4">
+                                </video>
+                            </div>
+                        </div>
+                        <div class="w-full md:w-7/12 lg:w-8/12 flex flex-col justify-center">
+                            <!-- 带有明显高亮的标签栏 -->
+                            <div class="flex flex-wrap gap-2 mb-6">
+                                <span class="px-3 py-1 bg-neon/5 border border-neon/30 text-neon text-xs rounded">真人短剧结合广告宣传</span>
+                                <span class="px-3 py-1 border border-purple-400 text-purple-400 text-xs rounded flex items-center gap-1">
+                                    <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
+                                    已上线抖音 (荷馨官方旗舰店)
+                                </span>
+                            </div>
+                            <h4 class="text-3xl md:text-4xl font-bold mb-8 text-white">脱发被嫌弃，离婚后我惊艳全场</h4>
+                            <div class="space-y-6">
+                                <div>
+                                    <h5 class="text-base text-neon font-bold mb-2 flex items-center"><span class="inline-block w-2.5 h-2.5 bg-neon mr-2"></span>项目难点：</h5>
+                                    <p class="text-gray-400 text-sm md:text-base leading-relaxed">项目中涉及产品展示镜头，AI生成时容易出现包装文字乱码、品牌Logo变形、瓶身结构扭曲等问题，尤其在人物与产品同时出现的镜头中，产品细节一致性难以保证，影响商业广告的专业呈现效果。</p>
+                                </div>
+                                <div>
+                                    <h5 class="text-base text-neon font-bold mb-2 flex items-center"><span class="inline-block w-2.5 h-2.5 bg-neon mr-2"></span>破局方案：</h5>
+                                    <p class="text-gray-300 text-sm md:text-base leading-relaxed">采用“剧情镜头”与“产品镜头”分离制作策略。人物剧情部分重点保证表演与情绪表达，产品展示部分则采用独立生成与精修流程，后期对包装细节进行逐帧优化，同时建立产品标准参考图，确保不同镜头下产品外观的一致性。</p>
+                                </div>
+                                <div>
+                                    <h5 class="text-base text-neon font-bold mb-2 flex items-center"><span class="inline-block w-2.5 h-2.5 bg-neon mr-2"></span>项目成果：</h5>
+                                    <p class="text-gray-400 text-sm md:text-base leading-relaxed">显著提升产品展示镜头的品牌还原度与商业质感，有效解决AI生成中的文字错误和包装变形问题，满足品牌方展示需求。</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- 制作过程展示 -->
+                    <div class="mt-12 pt-8 border-t border-white/5">
+                        <div class="grid grid-cols-2 md:grid-cols-4 gap-4 relative">
+                            <div class="flex flex-col gap-3 group/step">
+                                <div class="flex items-center gap-2">
+                                    <span class="w-1.5 h-1.5 rounded-full bg-gray-500 group-hover/step:bg-neon transition-colors"></span>
+                                    <span class="text-sm font-medium text-gray-400 group-hover/step:text-white transition-colors">角色设计</span>
+                                </div>
+                                <img src="images/p3_role.png" class="w-full aspect-video object-cover rounded border border-white/5 group-hover/step:border-neon/30 transition-colors" alt="角色设计">
+                            </div>
+                            <div class="flex flex-col gap-3 group/step">
+                                <div class="flex items-center gap-2">
+                                    <span class="w-1.5 h-1.5 rounded-full bg-gray-500 group-hover/step:bg-neon transition-colors"></span>
+                                    <span class="text-sm font-medium text-gray-400 group-hover/step:text-white transition-colors">场景设计</span>
+                                </div>
+                                <img src="images/p3_scene.png" class="w-full aspect-video object-cover rounded border border-white/5 group-hover/step:border-neon/30 transition-colors" alt="场景设计">
+                            </div>
+                            <div class="flex flex-col gap-3 group/step">
+                                <div class="flex items-center gap-2">
+                                    <span class="w-1.5 h-1.5 rounded-full bg-gray-500 group-hover/step:bg-neon transition-colors"></span>
+                                    <span class="text-sm font-medium text-gray-400 group-hover/step:text-white transition-colors">分镜设计</span>
+                                </div>
+                                <img src="images/p3_storyboard.png" class="w-full aspect-video object-cover rounded border border-white/5 group-hover/step:border-neon/30 transition-colors" alt="分镜设计">
+                            </div>
+                            <div class="flex flex-col gap-3 group/step">
+                                <div class="flex items-center gap-2">
+                                    <span class="w-1.5 h-1.5 rounded-full bg-gray-500 group-hover/step:bg-neon transition-colors"></span>
+                                    <span class="text-sm font-medium text-gray-400 group-hover/step:text-white transition-colors">后期剪辑</span>
+                                </div>
+                                <img src="images/p3_edit.png" class="w-full aspect-video object-cover rounded border border-white/5 group-hover/step:border-neon/30 transition-colors" alt="后期剪辑">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 项目 4 (竖屏 9:16 右图左文) -->
+                <div class="reveal group">
+                    <div class="flex flex-col md:flex-row-reverse gap-12 lg:gap-16">
+                        <div class="w-full md:w-5/12 lg:w-4/12 shrink-0">
+                            <div class="relative w-full aspect-[9/16] bg-gray-900 rounded-xl overflow-hidden border border-white/10 flex items-center justify-center">
+                                <video class="w-full h-full object-cover" controls playsinline loop muted>
+                                    <source src="videos/video4.mp4" type="video/mp4">
+                                </video>
+                            </div>
+                        </div>
+                        <div class="w-full md:w-7/12 lg:w-8/12 flex flex-col justify-center">
+                            <!-- 带有明显高亮的火焰标签栏 -->
+                            <div class="flex flex-wrap gap-2 mb-6">
+                                <span class="px-3 py-1 bg-neon/5 border border-neon/30 text-neon text-xs rounded">3D国漫风格视频</span>
+                                <span class="px-3 py-1 border border-purple-400 text-purple-400 text-xs rounded flex items-center gap-1">
+                                    <svg class="w-3.5 h-3.5" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M12.395 2.553a1 1 0 00-1.45-.385c-.345.23-.614.558-.822.88-.214.33-.403.713-.57 1.116-.334.804-.614 1.768-.84 2.734a31.365 31.365 0 00-.613 3.58 2.64 2.64 0 01-.945-1.067c-.328-.68-.398-1.534-.398-2.654A1 1 0 005.05 6.05 6.981 6.981 0 003 11a7 7 0 1011.95-4.95c-.592-.591-.98-.985-1.348-1.467-.363-.476-.724-1.063-1.207-2.03zM12.12 15.12A3 3 0 017 13s.879.5 2.5.5c0-1 .5-4 1.25-4.5.5 1 .786 1.293 1.371 1.879A2.99 2.99 0 0113 13a2.99 2.99 0 01-.879 2.121z" clip-rule="evenodd"></path></svg>
+                                    已上线红果短剧
+                                </span>
+                            </div>
+                            <h4 class="text-3xl md:text-4xl font-bold mb-8 text-white">和亲公主武力值爆表</h4>
+                            <div class="space-y-6">
+                                <div>
+                                    <h5 class="text-base text-neon font-bold mb-2 flex items-center"><span class="inline-block w-2.5 h-2.5 bg-neon mr-2"></span>项目难点：</h5>
+                                    <p class="text-gray-400 text-sm md:text-base leading-relaxed">项目包含大量古装动作戏与打斗镜头。AI在生成过程中容易出现肢体穿模、兵器穿帮、动作衔接不自然以及受力逻辑错误等问题，影响战斗场面的真实感与观赏性。</p>
+                                </div>
+                                <div>
+                                    <h5 class="text-base text-neon font-bold mb-2 flex items-center"><span class="inline-block w-2.5 h-2.5 bg-neon mr-2"></span>破局方案：</h5>
+                                    <p class="text-gray-300 text-sm md:text-base leading-relaxed">针对不同武打动作建立动作分解式提示词，将复杂连续动作拆分为多个关键动作节点进行生成。通过增加角色重心变化、身体朝向、武器运动轨迹及镜头运动描述，提高动作逻辑的准确性。</p>
+                                </div>
+                                <div>
+                                    <h5 class="text-base text-neon font-bold mb-2 flex items-center"><span class="inline-block w-2.5 h-2.5 bg-neon mr-2"></span>项目成果：</h5>
+                                    <p class="text-gray-400 text-sm md:text-base leading-relaxed">有效提升打斗镜头的动作流畅度与真实感，减少肢体穿帮现象，使战斗场面更具视觉冲击力。</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- 制作过程展示 -->
+                    <div class="mt-12 pt-8 border-t border-white/5">
+                        <div class="grid grid-cols-2 md:grid-cols-4 gap-4 relative">
+                            <div class="flex flex-col gap-3 group/step">
+                                <div class="flex items-center gap-2">
+                                    <span class="w-1.5 h-1.5 rounded-full bg-gray-500 group-hover/step:bg-neon transition-colors"></span>
+                                    <span class="text-sm font-medium text-gray-400 group-hover/step:text-white transition-colors">角色设计</span>
+                                </div>
+                                <img src="images/p4_role.png" class="w-full aspect-video object-cover rounded border border-white/5 group-hover/step:border-neon/30 transition-colors" alt="角色设计">
+                            </div>
+                            <div class="flex flex-col gap-3 group/step">
+                                <div class="flex items-center gap-2">
+                                    <span class="w-1.5 h-1.5 rounded-full bg-gray-500 group-hover/step:bg-neon transition-colors"></span>
+                                    <span class="text-sm font-medium text-gray-400 group-hover/step:text-white transition-colors">场景设计</span>
+                                </div>
+                                <img src="images/p4_scene.png" class="w-full aspect-video object-cover rounded border border-white/5 group-hover/step:border-neon/30 transition-colors" alt="场景设计">
+                            </div>
+                            <div class="flex flex-col gap-3 group/step">
+                                <div class="flex items-center gap-2">
+                                    <span class="w-1.5 h-1.5 rounded-full bg-gray-500 group-hover/step:bg-neon transition-colors"></span>
+                                    <span class="text-sm font-medium text-gray-400 group-hover/step:text-white transition-colors">分镜设计</span>
+                                </div>
+                                <img src="images/p4_storyboard.jpg" class="w-full aspect-video object-cover rounded border border-white/5 group-hover/step:border-neon/30 transition-colors" alt="分镜设计">
+                            </div>
+                            <div class="flex flex-col gap-3 group/step">
+                                <div class="flex items-center gap-2">
+                                    <span class="w-1.5 h-1.5 rounded-full bg-gray-500 group-hover/step:bg-neon transition-colors"></span>
+                                    <span class="text-sm font-medium text-gray-400 group-hover/step:text-white transition-colors">后期剪辑</span>
+                                </div>
+                                <img src="images/p4_edit.png" class="w-full aspect-video object-cover rounded border border-white/5 group-hover/step:border-neon/30 transition-colors" alt="后期剪辑">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 项目 5 (竖屏 9:16 左图右文) -->
+                <div class="reveal group">
+                    <div class="flex flex-col md:flex-row gap-12 lg:gap-16">
+                        <div class="w-full md:w-5/12 lg:w-4/12 shrink-0">
+                            <div class="relative w-full aspect-[9/16] bg-gray-900 rounded-xl overflow-hidden border border-white/10 flex items-center justify-center">
+                                <video class="w-full h-full object-cover" controls playsinline loop muted>
+                                    <source src="videos/video5.mp4" type="video/mp4">
+                                </video>
+                            </div>
+                        </div>
+                        <div class="w-full md:w-7/12 lg:w-8/12 flex flex-col justify-center">
+                            <div class="flex flex-wrap gap-2 mb-6">
+                                <span class="px-3 py-1 bg-neon/5 border border-neon/30 text-neon text-xs rounded">国内真人短剧视频</span>
+                                <span class="px-3 py-1 border border-purple-400 text-purple-400 text-xs rounded flex items-center gap-1">
+                                    即将上线红果短剧
+                                </span>
+                            </div>
+                            <h4 class="text-3xl md:text-4xl font-bold mb-8 text-white">弃尘登云</h4>
+                            <div class="space-y-6">
+                                <div>
+                                    <h5 class="text-base text-neon font-bold mb-2 flex items-center"><span class="inline-block w-2.5 h-2.5 bg-neon mr-2"></span>项目难点：</h5>
+                                    <p class="text-gray-400 text-sm md:text-base leading-relaxed">作为年代题材作品，AI对特定历史时期的服装风格、建筑特征、道具细节及社会环境缺乏准确认知，容易生成现代元素混入历史场景的情况。此外，角色在场景中调度复杂，人物走位与镜头衔接控制难度较高。</p>
+                                </div>
+                                <div>
+                                    <h5 class="text-base text-neon font-bold mb-2 flex items-center"><span class="inline-block w-2.5 h-2.5 bg-neon mr-2"></span>破局方案：</h5>
+                                    <p class="text-gray-300 text-sm md:text-base leading-relaxed">前期广泛收集历史照片、纪录片及影视资料，建立完整的年代视觉参考库，为AI提供统一的时代审美基准。在制作过程中，通过参考图垫图、风格锁定及场景资产统一管理，确保整体视觉风格一致。同时采用连环画式分镜设计，对角色站位、运动路径和镜头运动进行精细规划，实现复杂场景下的人物调度控制。</p>
+                                </div>
+                                <div>
+                                    <h5 class="text-base text-neon font-bold mb-2 flex items-center"><span class="inline-block w-2.5 h-2.5 bg-neon mr-2"></span>项目成果：</h5>
+                                    <p class="text-gray-400 text-sm md:text-base leading-relaxed">成功构建符合时代背景的视觉体系，避免现代元素穿帮问题，并在复杂场景中保持良好的叙事连贯性和画面秩序感。</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- 制作过程展示 -->
+                    <div class="mt-12 pt-8 border-t border-white/5">
+                        <div class="grid grid-cols-2 md:grid-cols-4 gap-4 relative">
+                            <div class="flex flex-col gap-3 group/step">
+                                <div class="flex items-center gap-2">
+                                    <span class="w-1.5 h-1.5 rounded-full bg-gray-500 group-hover/step:bg-neon transition-colors"></span>
+                                    <span class="text-sm font-medium text-gray-400 group-hover/step:text-white transition-colors">角色设计</span>
+                                </div>
+                                <img src="images/p5_role.png" class="w-full aspect-video object-cover rounded border border-white/5 group-hover/step:border-neon/30 transition-colors" alt="角色设计">
+                            </div>
+                            <div class="flex flex-col gap-3 group/step">
+                                <div class="flex items-center gap-2">
+                                    <span class="w-1.5 h-1.5 rounded-full bg-gray-500 group-hover/step:bg-neon transition-colors"></span>
+                                    <span class="text-sm font-medium text-gray-400 group-hover/step:text-white transition-colors">场景设计</span>
+                                </div>
+                                <img src="images/p5_scene.png" class="w-full aspect-video object-cover rounded border border-white/5 group-hover/step:border-neon/30 transition-colors" alt="场景设计">
+                            </div>
+                            <div class="flex flex-col gap-3 group/step">
+                                <div class="flex items-center gap-2">
+                                    <span class="w-1.5 h-1.5 rounded-full bg-gray-500 group-hover/step:bg-neon transition-colors"></span>
+                                    <span class="text-sm font-medium text-gray-400 group-hover/step:text-white transition-colors">分镜设计</span>
+                                </div>
+                                <img src="images/p5_storyboard.png" class="w-full aspect-video object-cover rounded border border-white/5 group-hover/step:border-neon/30 transition-colors" alt="分镜设计">
+                            </div>
+                            <div class="flex flex-col gap-3 group/step">
+                                <div class="flex items-center gap-2">
+                                    <span class="w-1.5 h-1.5 rounded-full bg-gray-500 group-hover/step:bg-neon transition-colors"></span>
+                                    <span class="text-sm font-medium text-gray-400 group-hover/step:text-white transition-colors">后期剪辑</span>
+                                </div>
+                                <img src="images/p5_edit.png" class="w-full aspect-video object-cover rounded border border-white/5 group-hover/step:border-neon/30 transition-colors" alt="后期剪辑">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 项目 6 (产品演示 - 双画幅分层展示) -->
+                <div class="reveal mt-32 pt-16 border-t border-white/5">
+                    <div class="flex flex-col items-center text-center mb-16">
+                        <div class="inline-block px-3 py-1 border border-neon/50 text-neon text-xs rounded-full mb-4">产品演示</div>
+                        <h4 class="text-3xl md:text-4xl font-bold text-white">产品宣传视频</h4>
+                        <p class="text-xs text-gray-500 mt-2">支持横竖屏全通路多维度适配传播（16:9 横屏 & 9:16 竖屏矩阵）</p>
+                    </div>
+                    
+                    <!-- 第一行：16:9 横屏视频 -->
+                    <div class="max-w-4xl mx-auto px-4 mb-20">
+                        <div class="text-left mb-3 text-xs text-gray-500 font-mono flex items-center gap-2">
+                            <span class="w-1.5 h-1.5 rounded-full bg-neon"></span> 横屏版本 16:9 (适用于官网、线下展示大屏)
+                        </div>
+                        <div class="relative w-full aspect-video bg-gray-900 rounded-xl overflow-hidden border border-white/10">
+                            <video class="w-full h-full object-cover" controls playsinline loop muted>
+                                <source src="videos/video6.mp4" type="video/mp4">
+                                您的浏览器不支持 HTML5 视频播放。
+                            </video>
+                        </div>
+                    </div>
+
+                    <!-- 第二行：9:16 竖屏视频（横排 3 个） -->
+                    <div class="max-w-4xl mx-auto px-4">
+                        <div class="text-left mb-6 text-xs text-gray-500 font-mono flex items-center gap-2">
+                            <span class="w-1.5 h-1.5 rounded-full bg-neon"></span> 竖屏矩阵 9:16 (适用于抖音、视频号、小红书信息流)
+                        </div>
+                        <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                            <!-- 竖屏视频 1 -->
+                            <div class="flex flex-col gap-2">
+                                <div class="relative w-full aspect-[9/16] bg-gray-900 rounded-xl overflow-hidden border border-white/10">
+                                    <video class="w-full h-full object-cover" controls playsinline loop muted>
+                                        <source src="videos/video7.mp4" type="video/mp4">
+                                        您的浏览器不支持 HTML5 视频播放。
+                                    </video>
+                                </div>
+                                <span class="text-xs text-gray-500 text-center font-mono">化妆类产品广告</span>
+                            </div>
+                            
+                            <!-- 竖屏视频 2 -->
+                            <div class="flex flex-col gap-2">
+                                <div class="relative w-full aspect-[9/16] bg-gray-900 rounded-xl overflow-hidden border border-white/10">
+                                    <video class="w-full h-full object-cover" controls playsinline loop muted>
+                                        <source src="videos/video8.mp4" type="video/mp4">
+                                        您的浏览器不支持 HTML5 视频播放。
+                                    </video>
+                                </div>
+                                <span class="text-xs text-gray-500 text-center font-mono">日用品类产品广告</span>
+                            </div>
+
+                            <!-- 竖屏视频 3 -->
+                            <div class="flex flex-col gap-2">
+                                <div class="relative w-full aspect-[9/16] bg-gray-900 rounded-xl overflow-hidden border border-white/10">
+                                    <video class="w-full h-full object-cover" controls playsinline loop muted>
+                                        <source src="videos/video9.mp4" type="video/mp4">
+                                        您的浏览器不支持 HTML5 视频播放。
+                                    </video>
+                                </div>
+                                <span class="text-xs text-gray-500 text-center font-mono">数码类产品广告</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- 第五板块：创作工具箱 (图2细线网格样式) -->
+    <section class="py-24 px-6 relative">
+        <div class="max-w-7xl mx-auto reveal">
+            <div class="mb-16 text-center">
+                <h2 class="text-xs text-neon tracking-[0.3em] uppercase mb-4">Toolkit</h2>
+                <h3 class="text-3xl md:text-4xl font-bold text-white">我的创作工具箱</h3>
+            </div>
+
+            <!-- 网格容器 (两行带格子，带细边框) -->
+            <div class="grid grid-cols-1 md:grid-cols-3 border border-white/10 rounded-xl overflow-hidden">
+                <!-- 第一行 -->
+                <div class="p-8 border-b border-white/10 md:border-r border-white/10 bg-white/[0.01] hover:bg-white/[0.03] transition-colors flex flex-col justify-between min-h-[160px]">
+                    <h4 class="text-xl font-bold text-white">ChatGPT</h4>
+                    <p class="text-sm text-gray-400 mt-4 font-light leading-relaxed">剧本分析 / 角色图 / 场景图 / 分镜图 / 关键帧生成</p>
+                </div>
+                <div class="p-8 border-b border-white/10 md:border-r border-white/10 bg-white/[0.01] hover:bg-white/[0.03] transition-colors flex flex-col justify-between min-h-[160px]">
+                    <h4 class="text-xl font-bold text-white">Flow</h4>
+                    <p class="text-sm text-gray-400 mt-4 font-light leading-relaxed">角色图 / 场景图</p>
+                </div>
+                <div class="p-8 border-b border-white/10 bg-white/[0.01] hover:bg-white/[0.03] transition-colors flex flex-col justify-between min-h-[160px]">
+                    <h4 class="text-xl font-bold text-white">Seedance2.0</h4>
+                    <p class="text-sm text-gray-400 mt-4 font-light leading-relaxed">视频生成</p>
+                </div>
+                <!-- 第二行 -->
+                <div class="p-8 border-b md:border-b-0 border-white/10 md:border-r border-white/10 bg-white/[0.01] hover:bg-white/[0.03] transition-colors flex flex-col justify-between min-h-[160px]">
+                    <h4 class="text-xl font-bold text-white">LibTV</h4>
+                    <p class="text-sm text-gray-400 mt-4 font-light leading-relaxed">角色图 / 场景图 / 分镜图 / 视频生成</p>
+                </div>
+                <div class="p-8 border-b md:border-b-0 border-white/10 md:border-r border-white/10 bg-white/[0.01] hover:bg-white/[0.03] transition-colors flex flex-col justify-between min-h-[160px]">
+                    <h4 class="text-xl font-bold text-white">剪映</h4>
+                    <p class="text-sm text-gray-400 mt-4 font-light leading-relaxed">剪辑 / 音乐 / 字幕</p>
+                </div>
+                <div class="p-8 bg-white/[0.01] hover:bg-white/[0.03] transition-colors flex flex-col justify-between min-h-[160px]">
+                    <h4 class="text-xl font-bold text-white">Photoshop</h4>
+                    <p class="text-sm text-gray-400 mt-4 font-light leading-relaxed">画面修正与视觉优化</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 第六板块：制作全流程 -->
+    <section id="workflow" class="py-24 md:py-32 px-6 bg-darker border-t border-white/5">
+        <div class="max-w-5xl mx-auto reveal">
+            <div class="mb-20 text-center">
+                <h2 class="text-xs text-neon tracking-[0.3em] uppercase mb-4">Workflow</h2>
+                <h3 class="text-3xl md:text-4xl font-bold">制作全流程</h3>
+            </div>
+
+            <div class="relative">
+                <!-- 中心线条 -->
+                <div class="absolute left-[16px] md:left-1/2 top-0 bottom-0 w-px bg-white/10 md:-translate-x-1/2"></div>
+                
+                <div class="space-y-12">
+                    <div class="relative flex md:justify-between items-start md:items-center w-full group">
+                        <div class="absolute left-[12px] md:left-1/2 w-2 h-2 rounded-full bg-gray-600 md:-translate-x-1/2 group-hover:bg-neon group-hover:shadow-[0_0_10px_#00f2fe] transition-all mt-1.5 md:mt-0"></div>
+                        <div class="ml-10 md:ml-0 md:w-[45%] md:text-right pr-4">
+                            <h4 class="text-lg font-bold text-white">剧本分析</h4>
+                            <p class="text-xs text-gray-500 mt-2">分析剧本类型、世界观设定、角色关系、剧情结构及核心情绪曲线</p>
+                        </div>
+                        <div class="hidden md:block md:w-[45%]"></div>
+                    </div>
+
+                    <div class="relative flex md:justify-between items-start md:items-center w-full group">
+                        <div class="absolute left-[12px] md:left-1/2 w-2 h-2 rounded-full bg-gray-600 md:-translate-x-1/2 group-hover:bg-neon transition-all mt-1.5 md:mt-0"></div>
+                        <div class="hidden md:block md:w-[45%]"></div>
+                        <div class="ml-10 md:ml-0 md:w-[45%] pl-4">
+                            <h4 class="text-lg font-bold text-white">视觉风格设计</h4>
+                            <p class="text-xs text-gray-500 mt-2">确定摄影风格、灯光风格、色彩体系及项目统一风格提示词</p>
+                        </div>
+                    </div>
+
+                    <div class="relative flex md:justify-between items-start md:items-center w-full group">
+                        <div class="absolute left-[12px] md:left-1/2 w-2 h-2 rounded-full bg-gray-600 md:-translate-x-1/2 group-hover:bg-neon transition-all mt-1.5 md:mt-0"></div>
+                        <div class="ml-10 md:ml-0 md:w-[45%] md:text-right pr-4">
+                            <h4 class="text-lg font-bold text-white">角色资产设计</h4>
+                            <p class="text-xs text-gray-500 mt-2">完成人物三视图、服装设定、表情库、动作库及角色一致性规范</p>
+                        </div>
+                        <div class="hidden md:block md:w-[45%]"></div>
+                    </div>
+
+                    <div class="relative flex md:justify-between items-start md:items-center w-full group">
+                        <div class="absolute left-[12px] md:left-1/2 w-2 h-2 rounded-full bg-gray-600 md:-translate-x-1/2 group-hover:bg-neon transition-all mt-1.5 md:mt-0"></div>
+                        <div class="hidden md:block md:w-[45%]"></div>
+                        <div class="ml-10 md:ml-0 md:w-[45%] pl-4">
+                            <h4 class="text-lg font-bold text-white">声音资产设计</h4>
+                            <p class="text-xs text-gray-500 mt-2">完成人物音色、语速、语气及情绪表达体系设计</p>
+                        </div>
+                    </div>
+
+                    <div class="relative flex md:justify-between items-start md:items-center w-full group">
+                        <div class="absolute left-[12px] md:left-1/2 w-2 h-2 rounded-full bg-gray-600 md:-translate-x-1/2 group-hover:bg-neon transition-all mt-1.5 md:mt-0"></div>
+                        <div class="ml-10 md:ml-0 md:w-[45%] md:text-right pr-4">
+                            <h4 class="text-lg font-bold text-white">场景资产设计</h4>
+                            <p class="text-xs text-gray-500 mt-2">完成场景布局、光影氛围、色调风格及空间设定设计</p>
+                        </div>
+                        <div class="hidden md:block md:w-[45%]"></div>
+                    </div>
+
+                    <div class="relative flex md:justify-between items-start md:items-center w-full group">
+                        <div class="absolute left-[12px] md:left-1/2 w-2 h-2 rounded-full bg-gray-600 md:-translate-x-1/2 group-hover:bg-neon transition-all mt-1.5 md:mt-0"></div>
+                        <div class="hidden md:block md:w-[45%]"></div>
+                        <div class="ml-10 md:ml-0 md:w-[45%] pl-4">
+                            <h4 class="text-lg font-bold text-white">道具资产设计</h4>
+                            <p class="text-xs text-gray-500 mt-2">完成核心剧情道具、常规道具及特殊道具资产设计</p>
+                        </div>
+                    </div>
+
+                    <div class="relative flex md:justify-between items-start md:items-center w-full group">
+                        <div class="absolute left-[12px] md:left-1/2 w-2 h-2 rounded-full bg-neon md:-translate-x-1/2 shadow-[0_0_10px_#00f2fe] mt-1.5 md:mt-0"></div>
+                        <div class="ml-10 md:ml-0 md:w-[45%] md:text-right pr-4">
+                            <h4 class="text-lg font-bold text-neon">资产确认</h4>
+                            <p class="text-xs text-gray-400 mt-2">提交人物、声音、场景及道具资产供甲方审核确认并锁定版本</p>
+                        </div>
+                        <div class="hidden md:block md:w-[45%]"></div>
+                    </div>
+
+                    <div class="relative flex md:justify-between items-start md:items-center w-full group">
+                        <div class="absolute left-[12px] md:left-1/2 w-2 h-2 rounded-full bg-gray-600 md:-translate-x-1/2 group-hover:bg-neon transition-all mt-1.5 md:mt-0"></div>
+                        <div class="hidden md:block md:w-[45%]"></div>
+                        <div class="ml-10 md:ml-0 md:w-[45%] pl-4">
+                            <h4 class="text-lg font-bold text-white">导演分镜开发</h4>
+                            <p class="text-xs text-gray-500 mt-2">拆解剧本镜头语言，明确景别、机位、运镜、动作、情绪及画面节点</p>
+                        </div>
+                    </div>
+
+                    <div class="relative flex md:justify-between items-start md:items-center w-full group">
+                        <div class="absolute left-[12px] md:left-1/2 w-2 h-2 rounded-full bg-gray-600 md:-translate-x-1/2 group-hover:bg-neon transition-all mt-1.5 md:mt-0"></div>
+                        <div class="ml-10 md:ml-0 md:w-[45%] md:text-right pr-4">
+                            <h4 class="text-lg font-bold text-white">AI分镜图制作</h4>
+                            <p class="text-xs text-gray-500 mt-2">依据设定生成高一致性分镜画面，验证构图与镜头表达</p>
+                        </div>
+                        <div class="hidden md:block md:w-[45%]"></div>
+                    </div>
+
+                    <div class="relative flex md:justify-between items-start md:items-center w-full group">
+                        <div class="absolute left-[12px] md:left-1/2 w-2 h-2 rounded-full bg-gray-600 md:-translate-x-1/2 group-hover:bg-neon transition-all mt-1.5 md:mt-0"></div>
+                        <div class="hidden md:block md:w-[45%]"></div>
+                        <div class="ml-10 md:ml-0 md:w-[45%] pl-4">
+                            <h4 class="text-lg font-bold text-white">AI视频生成</h4>
+                            <p class="text-xs text-gray-500 mt-2">根据分镜及镜头提示词生成视频素材，保证角色、场景及动作一致性</p>
+                        </div>
+                    </div>
+
+                    <div class="relative flex md:justify-between items-start md:items-center w-full group">
+                        <div class="absolute left-[12px] md:left-1/2 w-2 h-2 rounded-full bg-gray-600 md:-translate-x-1/2 group-hover:bg-neon transition-all mt-1.5 md:mt-0"></div>
+                        <div class="ml-10 md:ml-0 md:w-[45%] md:text-right pr-4">
+                            <h4 class="text-lg font-bold text-white">后期制作</h4>
+                            <p class="text-xs text-gray-500 mt-2">完成剪辑、配音、音效、配乐、字幕包装及节奏优化</p>
+                        </div>
+                        <div class="hidden md:block md:w-[45%]"></div>
+                    </div>
+
+                    <div class="relative flex md:justify-between items-start md:items-center w-full group">
+                        <div class="absolute left-[12px] md:left-1/2 w-2 h-2 rounded-full bg-neon md:-translate-x-1/2 shadow-[0_0_10px_#00f2fe] mt-1.5 md:mt-0"></div>
+                        <div class="hidden md:block md:w-[45%]"></div>
+                        <div class="ml-10 md:ml-0 md:w-[45%] pl-4">
+                            <h4 class="text-lg font-bold text-neon">成片交付</h4>
+                            <p class="text-xs text-gray-400 mt-2">完成质检优化、终版输出、项目归档及交付</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 底部：与我联系 -->
+    <footer id="contact" class="py-32 px-6 relative overflow-hidden flex flex-col justify-center items-center text-center">
+        <!-- 底部大光晕 -->
+        <div class="absolute bottom-[-200px] left-1/2 -translate-x-1/2 w-[800px] h-[400px] bg-neon/10 blur-[100px] rounded-[100%] pointer-events-none z-0"></div>
+        
+        <div class="relative z-10 reveal">
+            <h2 class="text-xs text-neon tracking-[0.3em] uppercase mb-6 font-semibold">CONTACT ME</h2>
+            <h3 class="text-5xl md:text-7xl font-black mb-6 tracking-tighter text-white">欢迎探讨合作</h3>
+            <p class="text-3xl md:text-5xl font-black mb-16 tracking-tighter text-transparent bg-clip-text bg-gradient-to-r from-neon to-blue-500">用AI创造无限可能</p>
+            
+            <div class="flex flex-col md:flex-row gap-8 md:gap-16 justify-center items-center font-mono text-sm tracking-widest text-gray-400">
+                <a href="tel:19957294252" class="hover:text-neon transition-colors flex items-center gap-3">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"></path></svg>
+                    19957294252
+                </a>
+                <a href="mailto:1412760686@qq.com" class="hover:text-neon transition-colors flex items-center gap-3">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path></svg>
+                    1412760686@qq.com
+                </a>
+            </div>
+            
+            <div class="mt-24 pt-8 border-t border-white/5 text-xs text-gray-600 font-light tracking-widest">
+                &copy; 2024 GAO LILI. ALL RIGHTS RESERVED.
+            </div>
+        </div>
+    </footer>
+
+    <!-- 交互脚本 -->
+    <script>
+        // 导航栏滚动模糊效果
+        window.addEventListener('scroll', () => {
+            const navbar = document.getElementById('navbar');
+            if (window.scrollY > 50) {
+                navbar.classList.add('bg-dark/90', 'backdrop-blur-lg');
+                navbar.classList.remove('bg-dark/70', 'backdrop-blur-md');
+            } else {
+                navbar.classList.add('bg-dark/70', 'backdrop-blur-md');
+                navbar.classList.remove('bg-dark/90', 'backdrop-blur-lg');
+            }
+        });
+
+        // 滚动渐现动画 (Intersection Observer)
+        const revealElements = document.querySelectorAll('.reveal');
+        
+        const revealCallback = (entries, observer) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('active');
+                }
+            });
+        };
+
+        const revealOptions = {
+            threshold: 0.15, // 元素出现15%时触发
+            rootMargin: "0px 0px -50px 0px"
+        };
+
+        const revealObserver = new IntersectionObserver(revealCallback, revealOptions);
+
+        revealElements.forEach(el => {
+            revealObserver.observe(el);
+        });
+
+        // 首屏加载即触发一次动画
+        setTimeout(() => {
+            document.querySelector('.reveal').classList.add('active');
+        }, 100);
+    </script>
+</body>
+</html>
